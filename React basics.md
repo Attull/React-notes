@@ -242,3 +242,85 @@ class Searchbar extends React.Component {
 - This means that the component is declarative, the `state` determines how the data or UI is manipulated.
 
 - When an action (or change) occurs the component is already aware through its change in `state` and then re-renders
+
+
+### Component Lifecycle
+      constructor (good place to do one-time setup)
+        ⬇
+      render (Avoid doing anything beside returning JSX)
+      `content visible on screen`
+        ⬇
+      componentDidMount (good place to do data loading)
+      `Sit and wait for updates...`
+        ⬇
+      componentDidUpdate (Good place to do more data-loading when state/props change)
+      `Sit and wait until this component is not longer shown`
+        ⬇
+       componentWillUnmount (Good place to do cleanup, especially for non-React stuff)
+    
+#### Other lifecycle methods (rarely used)
+- shouldComponentUpdate
+- getDerivedStateFromProps
+- getSnapshotBeforeUpdate
+
+### Event Handlers: Handling events with React elements is very similar to handling events on DOM elements
+- `onClick` User clicks on something : A div can  be clicked
+- `onChange` User changes text in an input
+- `onSubmit` User submits a form
+
+### React Refs
+- Gives access to a single DOM element
+- We create refs in the constructor -> Assign them to instance variables -> then pass to a particular JSX element as props
+
+### React Hooks
+#### Hooks System
+- `useState`: Function that lets you use **state** in a functional component
+- `useEffect`: Function that lets you use something like **lifecycle methods** in a functional component
+- `useRef`: Function that lets you create a **ref** in a funcitonal component
+
+`Hooks are way to write resuable code, instead of more classic techniques like inheritance`
+
+#### 7 Primitive Hooks (Not a Technical term)
+- useState
+- useEffect
+- useContext
+- useReducer
+- useCallback
+- useMemo
+- useRef
+- Custom hook
+
+
+#### Class Components v/s Function Components
+
+| -        | Class Components           |  Function Components |
+| :------------- |:-------------:| :-----:|
+| Initalization     |`state = { activeIndex: 0 }` | `useState(0)` |
+| Refernce     | `this.state.activeIndex`      |   `activeIndex` |
+|Updates | `this.setState({ activeIndex: 10 })`      |    `setActiveIndex(10)` |
+
+
+#### Examples are added in comments
+
+--------------------------------------------------------
+
+# Redux
+- React is to render and present data to user not handling
+
+## What is Redux?
+- State Managment Library
+- Makes creating complex applications easier
+- Not required to create a React App!
+- Not explicitly designed to work with React!
+
+## Redux Cycle
+    Action Creator
+        ⬇
+    Action
+        ⬇
+    Dispatch
+        ⬇
+    Reducers
+        ⬇
+    State
+   
