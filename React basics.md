@@ -2,11 +2,11 @@
   React Fundamentals Notes
 </h1>
 
-<p align="center">
+<!-- <p align="center">
    <a style="text-decoration:none">
     <img src="https://img.shields.io/badge/Still%20Evolving-grey" alt="version" />
   </a> 
-</p>
+</p> -->
 
 ## Introduction
 
@@ -62,6 +62,40 @@ Creating a react project comes with some files, which we need to understand. Fol
 
   * ```serviceworker.js```: It is related to the progressive web applications.
 
+## Virtual DOM
+
+- React uses the [virtual DOM](http://tonyfreed.com/blog/what_is_virtual_dom) to clone a node that already exists in the DOM
+
+- Subtrees are created in the virtual DOM and then rendered based on state changes
+
+- When a state change occurs two things happen:
+
+    - React runs a diff to check what changed
+
+    - Then it updates the DOM based on the result of that diff (Referred to as [reconciliation](https://facebook.github.io/react/docs/reconciliation.html))
+
+- The Virtual DOM is considered the magic behind React. It batches DOM operations to keep everything quick and snappy because DOM manipulation is SLOW 
+
+- Once a state is changed it triggers the [diff algorithm](https://facebook.github.io/react/docs/reconciliation.html) to check all components, re-rendering only those that have changed properties. 
+
+## JSX
+
+- JSX is a JavaScript Extension Syntax used in React to easily write HTML and JavaScript together
+
+- To convert JSX into browser understandable JavaScript code, we use a tool like [Babel](https://babeljs.io/) which is a JavaScript compiler/transpiler.
+
+- Let's see the breakdown of the JSX converting process to React.createElement function:
+
+- E.g 
+
+**JSX Code:**
+          <h1 className:"topBarHeading">welcome to FSD classes</h1>
+
+**compiles to**
+          React.createElement("h1",
+                                {className:"topBarHeading", "I am Himanshu"
+                              })
+
 ## Components
 
 * The entire react app is made up of small individual modules called as Components. 
@@ -80,3 +114,131 @@ Creating a react project comes with some files, which we need to understand. Fol
   * Functional Components
   * Class Components
 
+
+### Functional Component
+
+- Similar to a function and returns `jsx` that gets rendered to the DOM
+
+```js
+//Searchbar.js
+const Searchbar = () => {
+    return <input />;
+};
+
+//index.js
+const App = () => {
+    return (
+        <div>
+            <Searchbar />
+        </div>
+    );
+}
+```
+- In functional components the `props` object is passed as an argument E.g:
+
+```js
+const App = (props) => { }
+```
+
+### Class Component
+
+- Used whenever a component needs to have some kind of internal record keeping
+
+- It is self aware and keeps track of anything that happens to it once it has been rendered
+
+- It is created using an [ES6 `class`](https://github.com/DrkSephy/es6-cheatsheet#classes)
+
+```js
+class Searchbar extends React.Component {
+    render() {
+        return <input />;
+    }
+}
+```
+
+- By extending `React.Component` you give the `Searchbar` class added functionality (state and props)
+
+- To call an instance of a `class` you have to wrap it in jsx tags E.g: `<Searchbar />`
+
+- Start off with a functional component and as your component gets complex you can convert to a class
+
+- In a `class` component `props` are available within the component and don't need to be passed in as an argument. It can be accessed in a method using `this.props`
+
+### Event Handling
+
+- Similar to a regular event handler, in react it is a function that runs anytime an event occurs
+
+- In react you declare the event handler then pass it to the element that you want to monitor for events
+
+- It is considered best practice to begin the name of an event handler with `on` or `handle` E.g:
+
+```js
+class Searchbar extends React.Component {
+    handleInputChange(e) {
+        console.log(e.target.value);
+    }
+    render() {
+        return <input onChange={this.handleInputChange()} />;
+    }
+}
+```
+
+### State
+
+- `state` is a plain javascript object that is used to record and react to user events
+
+- Each `class` based component has its own state object
+
+- Whenever `state` is changed a component re-renders and also forces all of its children to re-render as well
+
+- Before `state` can be used in a component the object needs to be initialized E.g:
+
+```js
+class Searchbar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { term: ''};
+    }
+    handleInputChange(e) {
+        console.log(e.target.value);
+    }
+    render() {
+        return <input onChange={this.handleInputChange()}/>;
+    }
+}
+```
+
+- The `constructor` function is called whenever a new instance of a `class` is created
+
+- It is reserved for setting up certain configurations in a `class` such as initializing variables, initializing state or binding event handler methods
+
+- `super` is a reference to the `constructor` method on the React.Component `class` that is getting extended. This means that is has its own `constructor` function and so to reference it we have to use the `super` keyword
+
+- In the code above `state` has been initialized E.g: `this.state = { property1: '' }`
+
+- This syntax should only be used to declare state within the `constructor` function
+
+- `this.setState()` should be used to manipulate state after it has been initialized E.g `this.setState({ property1: 'new state'});`
+
+```js
+class Searchbar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { term: ''};
+    }
+    render() {
+        return (
+            <div>
+                <input
+                    value={this.state.term}
+                    onChange={(e) => this.setState({term: e.target.value })} />
+            </div>
+        );
+    }
+}
+```
+- In the code above the value of the input has been set to the `state`
+
+- This means that the component is declarative, the `state` determines how the data or UI is manipulated.
+
+- When an action (or change) occurs the component is already aware through its change in `state` and then re-renders
