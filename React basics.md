@@ -60,8 +60,6 @@ Creating a react project comes with some files, which we need to understand. Fol
 
   * ```logo.svg```: reference in the App component
 
-  * ```serviceworker.js```: It is related to the progressive web applications.
-
 ## Virtual DOM
 
 - React uses the [virtual DOM](http://tonyfreed.com/blog/what_is_virtual_dom) to clone a node that already exists in the DOM
