@@ -1,5 +1,5 @@
 <h1 align="center">
-  React Fundamentals Notes
+  React Notes
 </h1>
 
 <!-- <p align="center">
@@ -299,8 +299,6 @@ class Searchbar extends React.Component {
 | Refernce     | `this.state.activeIndex`      |   `activeIndex` |
 |Updates | `this.setState({ activeIndex: 10 })`      |    `setActiveIndex(10)` |
 
-
-#### Examples are added in comments
 
 --------------------------------------------------------
 
